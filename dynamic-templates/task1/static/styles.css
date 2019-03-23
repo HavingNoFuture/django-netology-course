@@ -1,0 +1,24 @@
+.green {
+	background-color: 'green';
+}
+
+.darkred {
+	background-color: 'darkred';
+}
+
+.red {
+	background-color: 'red';
+}
+
+.orangered {
+	background-color: 'orangered';	
+}
+
+.lightgrey {
+	background-color: 'lightgrey';
+}
+
+.month {
+	width: 50px;
+	display: 'inline-block';
+}
