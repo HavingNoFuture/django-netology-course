@@ -15,10 +15,10 @@ def index(request):
     from_landing = request.GET.get('from-landing')
     if from_landing == 'original':
         counter_click['original_click'] += 1
-        return render_to_response('index.html')
     elif from_landing == 'test':
         counter_click['test_click'] += 1
-        return render_to_response('index.html')
+
+    return render_to_response('index.html')
 
 
 def landing(request):
@@ -30,10 +30,11 @@ def landing(request):
     arg = request.GET.get('ab-test-arg')
     if arg == 'original':
         counter_show['original_show'] += 1
-        return render_to_response('landing.html')
     elif arg == 'test':
         counter_show['test_show'] += 1
         return render_to_response('landing_alternate.html')
+
+    return render_to_response('landing.html')
 
 
 def stats(request):
@@ -41,10 +42,21 @@ def stats(request):
     # Чтобы отличить с какой версии лендинга был переход
     # проверяйте GET параметр marker который может принимать значения test и original
     # Для вывода результат передайте в следующем формате:
-    test_conversion = counter_click['original_click'] / counter_show['original_show']
-    original_conversion = counter_click['test_click'] / counter_show['test_show']
+    if counter_show['original_show']:
+        test_conversion = counter_click['original_click'] / counter_show['original_show']
+    else:
+        test_conversion = '/landing.html?=original ни разу не просмотрена'
+
+
+    if counter_show['test_show']:
+        original_conversion = counter_click['test_click'] / counter_show['test_show']
+    else:
+        original_conversion = '/landing.html?=test ни разу не просмотрена'
+
+
 
     return render_to_response('stats.html', context={
         'test_conversion': test_conversion,
         'original_conversion': original_conversion,
     })
+
