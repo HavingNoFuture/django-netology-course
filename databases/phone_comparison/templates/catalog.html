@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Каталог{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1>Сравнение телефонов</h1>
+            <table>
+			  <tr>
+			    <td>Модель:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.name }}</td>
+			    {% endfor %}
+			  </tr>
+			  <tr>
+    			<td>Производитель:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.producer.name }}</td>
+			    {% endfor %}
+			  </tr>
+			  <tr>
+			  <tr>
+    			<td>Цена:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.price }} руб.</td>
+			    {% endfor %}
+			  </tr>
+    			<td>Операционная система:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.os }}</td>
+			    {% endfor %}
+			  </tr>
+			  <tr>
+    			<td>Разрещение экрана:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.resolution }}</td>
+			    {% endfor %}
+			  </tr>
+			  <tr>
+    			<td>Камера:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.camera }}Мп</td>
+			    {% endfor %}
+			  </tr>
+			  <tr>
+    			<td>Оперативная память:</td>
+			    {% for phone in phones %}
+			    <td>{{ phone.ram }}Гб</td>
+			    {% endfor %}
+			  </tr>
+			</table>
+
+        </div>
+    </div>
+{% endblock %}
