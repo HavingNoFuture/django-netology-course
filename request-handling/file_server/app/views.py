@@ -42,11 +42,16 @@ class FileList(TemplateView):
                     result.append(file_info)
             else:
                 result.append(file_info)
-                
-        return {
-            'files': result,
-            'date': sort_date
-        }
+            
+        if date:
+            return {
+                'files': result,
+                'date': sort_date
+            }
+        else:    
+            return {
+                'files': result,    
+            }
 
 def file_content(request, name):
     # Реализуйте алгоритм подготавливающий контекстные данные для шаблона по примеру:\
