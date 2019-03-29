@@ -43,15 +43,14 @@ def stats(request):
     # проверяйте GET параметр marker который может принимать значения test и original
     # Для вывода результат передайте в следующем формате:
     if counter_show['original_show']:
-        test_conversion = counter_click['original_click'] / counter_show['original_show']
+        original_conversion = counter_click['original_click'] / counter_show['original_show']
     else:
-        test_conversion = '/landing.html?=original ни разу не просмотрена'
-
+        original_conversion = 'Оригинальная страница ни разу не просмотрена'
 
     if counter_show['test_show']:
-        original_conversion = counter_click['test_click'] / counter_show['test_show']
+        test_conversion = counter_click['test_click'] / counter_show['test_show']
     else:
-        original_conversion = '/landing.html?=test ни разу не просмотрена'
+        test_conversion = 'Тестовая страница ни разу не просмотрена'
 
 
 
