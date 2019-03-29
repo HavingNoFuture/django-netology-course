@@ -1,15 +1,20 @@
-import datetime
+# import datetime
 import time
 import os
 
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from app.settings import FILES_PATH
+from django.conf import settings
 
+
+from datetime import datetime
+
+datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+print(datetime_object)
 
 def create_datetime(tuple):
-    return datetime.datetime(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4], tuple[5])
+    return datetime(tuple[0], tuple[1], tuple[2], tuple[3], tuple[4], tuple[5])
 
 class FileList(TemplateView):
     template_name = 'index.html'
@@ -17,15 +22,14 @@ class FileList(TemplateView):
     def get_context_data(self, date=None):
         # Реализуйте алгоритм подготавливающий контекстные данные для шаблона по примеру:
 
-        filenames = os.listdir(FILES_PATH)
+        filenames = os.listdir(settings.FILES_PATH)
 
         if date:
-            sort_date_tuple = time.strptime(date, '%Y-%m-%d') # Перевожу строку даты в struct_mode обьект
-            sort_date = create_datetime(sort_date_tuple).date() # Преобразую этот обьект в дату без времени
+            sort_date = datetime.strptime(date, '%Y-%m-%d').date()
 
         result = []
         for filename in filenames:
-            info = os.stat(f'{FILES_PATH}{os.sep}{filename}') # Получаю информацию о файле
+            info = os.stat(f'{settings.FILES_PATH}{os.sep}{filename}') # Получаю информацию о файле
 
             file_info = {
                 'name': filename,
@@ -39,21 +43,22 @@ class FileList(TemplateView):
             else:
                 result.append(file_info)
                 
-        if date:
-            return {
-                'files': result,
-                'date': sort_date
-            }
-        else:
-            return {
-                'files': result
-            }
-
+        return {
+            'files': result,
+            'date': sort_date
+        }
 
 def file_content(request, name):
     # Реализуйте алгоритм подготавливающий контекстные данные для шаблона по примеру:\
-    with open(f'{FILES_PATH}{os.sep}{name}') as file:
-        file_content = file.read()
+    filenames = os.listdir(settings.FILES_PATH)
+    print()
+    print(filenames)
+    print(name in filenames)
+    if name in filenames:
+        with open(f'{settings.FILES_PATH}{os.sep}{name}') as file:
+            file_content = file.read()
+    else:
+        file_content = 'Такого файла не сушествует!'
 
     return render(
         request,
