@@ -5,7 +5,7 @@ import sys
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
-from app.settings import BASE_DIR
+from  django.conf import settings
 
 class InflationView(TemplateView):
     template_name = 'inflation.html'
@@ -15,15 +15,13 @@ class InflationView(TemplateView):
 
         database = []
         headers = []
-        with open(f'{BASE_DIR}{os.sep}inflation_russia.csv', newline='', encoding='utf-8') as csvfile:
+        with open(f'{settings.BASE_DIR}{os.sep}inflation_russia.csv', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=';')
 
             flag = True
             for row in reader:
                 year = []
                 keys = row.keys()
-
-                print(keys)
                  
                 for key in keys:
                     month = {}
@@ -32,27 +30,11 @@ class InflationView(TemplateView):
                             month['count'] = int(row[key])
                         else:
                             month['count'] = float(row[key])
-
-                        if month['count'] < 0:
-                            month['color'] = 'green'
-                        elif month['count'] >= 1 and month['count'] < 2:
-                            month['color'] = 'orangered'
-                        elif month['count'] >= 2 and month['count'] < 5:
-                            month['color'] = 'red'
-                        elif month['count'] >= 5:
-                            month['color'] = 'darkred'
-                        else: 
-                            month['color'] = 'white'
-
-                        if key == 'Год':
-                            month['color'] = 'white'
-
-                        elif key == 'Суммарная':
-                            month['color'] = 'lightgrey'
+                        month['key'] = key
 
                     else:
                         month['count'] = '-'
-                        month['color'] = 'white'
+                        month['key'] = key
                                     
                     year.append(month)
 

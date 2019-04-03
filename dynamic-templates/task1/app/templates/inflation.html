@@ -13,6 +13,7 @@
   </head>
 
   <body>
+    {% load app_tags %}
     {% block content %}
       <div class="row">
         <h1 class="col s14">Инфляция в России</h1>
@@ -26,7 +27,7 @@
             <li>
               <ul class="year">
                 {% for col in row %}
-                  <li style='display: inline-block; width: 44px; background-color: {{ col.color }}'>{{ col.count }}</li>
+                  {{ col|format_color|safe }}
                 {% endfor %}
               </ul>
             </li>

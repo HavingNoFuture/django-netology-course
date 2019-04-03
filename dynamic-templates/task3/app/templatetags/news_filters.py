@@ -1,7 +1,6 @@
 from django import template
 from datetime import timedelta
 from datetime import datetime
-import time
 
 register = template.Library()
 
@@ -31,7 +30,7 @@ def score_filter(score, default):
 			return 'нейтрально'
 		else:
 			return 'хорошо'
-			
+
 	return default
 
 
@@ -55,5 +54,3 @@ def format_selftext(text, count):
 	last = ' '.join(result[len(result) - count : len(result)])
 	result = f'{first} ... {last}'
 	return result
-
-
