@@ -15,6 +15,10 @@
             <h5 class="center">Оригинальный вариант</h5>
 
             <p class="light">Количество переходов к количеству просмотров: {{ original_conversion }}</p>
+            
+            {% if errors.original %}
+              <p style="color:red">{{ errors.original }}</p>
+            {% endif %}
           </div>
         </div>
         <div class="col s12 m6">
@@ -22,6 +26,11 @@
             <h5 class="center">Тестовый вариант</h5>
 
             <p class="light">Количество переходов к количеству просмотров: {{ test_conversion }}</p>
+
+            {% if errors.test %}
+              <p style="color:red">{{ errors.test }}</p>
+            {% endif %}
+          </div>
           </div>
         </div>
       </div>

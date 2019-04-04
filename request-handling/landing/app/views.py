@@ -37,17 +37,17 @@ def stats(request):
     # Чтобы отличить с какой версии лендинга был переход
     # проверяйте GET параметр marker который может принимать значения test и original
     # Для вывода результат передайте в следующем формате:
+    context = {}
+    context['errors'] = {}
+    
     if counter_show['original']:
-        original_conversion = counter_click['original'] / counter_show['original']
+        context['original_conversion'] = counter_click['original'] / counter_show['original']
     else:
-        original_conversion = 'Оригинальная страница ни разу не просмотрена'
+        context['errors']['original'] = 'Оригинальная страница ни разу не просмотрена'
 
     if counter_show['test']:
-        test_conversion = counter_click['test'] / counter_show['test']
+        context['test_conversion'] = counter_click['test'] / counter_show['test']
     else:
-        test_conversion = 'Тестовая страница ни разу не просмотрена'
+        context['errors']['test'] = 'Тестовая страница ни разу не просмотрена'
 
-    return render_to_response('stats.html', context={
-        'test_conversion': test_conversion,
-        'original_conversion': original_conversion,
-    })
+    return render_to_response('stats.html', context)
