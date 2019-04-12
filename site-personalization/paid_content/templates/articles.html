@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Журнал{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header">
+            <h1>Список статей</h1>
+        </div>
+        <div class="articles">
+            {% for article in articles %}
+                <h3><a href="../articles/{{ article.pk }}">{{ article.title}}</a></h3>
+                {% if article.paid %}
+                    <p>Только для платных пользователей!</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
