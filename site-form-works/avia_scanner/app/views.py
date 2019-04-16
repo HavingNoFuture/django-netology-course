@@ -27,9 +27,6 @@ def cities_lookup(request):
 
     cache_key = f'cities-{term}'
     cached = cache.get(cache_key)
-    print()
-    print(term, cache_key, cached)
-    print()
 
     if cached is not None:
         return JsonResponse(cached, safe=False)
