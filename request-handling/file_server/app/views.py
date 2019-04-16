@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from django.http import Http404
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
@@ -45,7 +46,7 @@ def file_content(request, name):
         with open(f'{settings.FILES_PATH}{os.sep}{name}') as file:
             file_content = file.read()
     else:
-        file_content = 'Такого файла не сушествует!'
+        raise Http404("File does not exist")
 
     return render(
         request,
