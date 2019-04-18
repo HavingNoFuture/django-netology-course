@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="header"></div>
+            {% if not request.user.is_authenticated %}
+                Привет, <b>гость</b>.<br>
+                Пожалуйста, <a href="/signup">зарегистрируйся</a> или <a href="/login">авторизуйся</a>!
+            {% else %}
+                Привет, {( request.user.username }}!
+                <form action="/login/" style="display: inline-block">
+                    <button type="submit">login</button>
+                </form>
+                <form action="/signup/" style="display: inline-block">
+                    <button type="submit">signup</button>
+                </form>
+                <form action="/logout/" style="display: inline-block">
+                    <button type="submit">logout</button>
+                </form>
+            {% endif %}
+    </div>
+{% endblock %}
