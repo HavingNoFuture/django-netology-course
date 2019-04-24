@@ -15,35 +15,12 @@ class InflationView(TemplateView):
 
         database = []
         headers = []
-        with open(f'{settings.BASE_DIR}{os.sep}inflation_russia.csv', newline='', encoding='utf-8') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=';')
-
-            flag = True
+        with open('inflation_russia.csv', newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
             for row in reader:
-                year = []
-                keys = row.keys()
-                 
-                for key in keys:
-                    month = {}
-                    if row[key]:
-                        if key == 'Год':
-                            month['count'] = int(row[key])
-                        else:
-                            month['count'] = float(row[key])
-                        month['key'] = key
+                if not headers:
+                    headers = ''.join(row).split(';')
+                else:
+                    database.append(''.join(row).split(';'))
 
-                    else:
-                        month['count'] = '-'
-                        month['key'] = key
-                                    
-                    year.append(month)
-
-                    if flag:
-                        headers.append(key)
-
-                flag = False
-                database.append(year)
-
-        context = {'data': database, 'headers': headers}
-        return render(request, self.template_name,
-                      context)
+        return render(request, self.template_name, {'data': database, 'headers': headers})

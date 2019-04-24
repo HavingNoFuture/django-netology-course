@@ -5,25 +5,20 @@ register = template.Library()
 
 @register.filter
 def format_color(value):
-    if value['key'] == 'Год':
-        color = 'white'
-    elif value['key'] == 'Суммарная':
-        color = 'lightgrey'
-    else: 
-        
-        if value['count'] == '-':
-            color = 'white'
-        elif value['count'] == 'Год':
-            color = 'blue'
-        elif value['count'] < 0:
-            color = 'green' 
-        elif value['count'] >= 1 and value['count'] < 2:
-            color = 'orangered'
-        elif value['count'] >= 2 and value['count'] < 5:
-            color = 'red'
-        elif value['count'] >= 5:
-            color = 'darkred'
-        else:
-            color = 'white'
+    if value:
+        val = float(value)
+        if val < 0:
+            return 'green'
+        if 1 < val <= 2:
+            return 'orangered'
+        if 2 < val <= 5:
+            return 'red'
+        if 5 < val:
+            return 'darkred'
+    return '-'
 
-    return '<li style="display: inline-block; width: 44px; background-color:{}">{}</li>'.format(color, value['count'])
+@register.filter
+def format_colomn(value):
+    if not value:
+        return '-'
+    return value

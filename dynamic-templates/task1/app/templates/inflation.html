@@ -20,21 +20,24 @@
         <ul class="col s14 m8">
           <ul class="headers">
           {% for header in headers %}
-            <li style='display: inline-block; width: 44px;'>{{ header }}</li>
+            <li style='display: inline-block; width: 75px;'>{{ header }}</li>
           {% endfor %}
           </ul>
           {% for row in data %}
             <li>
               <ul class="year">
                 {% for col in row %}
-                  {{ col|format_color|safe }}
+                  {% if forloop.first %}
+                    <li style='display: inline-block; width: 75px; background-color: white'>{{ col }}</li>
+                  {% elif forloop.last %}
+                    <li style='display: inline-block; width: 75px; background-color: lightgrey'>{{ col }}</li>
+                  {% else %}
+                    <li style='display: inline-block; width: 75px; background-color:{{ col|format_color }}'>{{ col|format_colomn }}</li>
+                  {% endif %}
                 {% endfor %}
               </ul>
             </li>
           {% endfor %}
-
-        <!-- Ваша логика -->
-
         </ul>
       </div>
     {% endblock %}
