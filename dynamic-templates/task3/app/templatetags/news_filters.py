@@ -36,20 +36,20 @@ def score_filter(score, default):
 
 @register.filter
 def format_num_comments(value, default):
-    if value == 0:
-    	return default
-    elif value > 0 and value < 50:
-    	return value
-    elif value >=50:
-    	return '50+'
+	if value == 0:
+		return default
+	elif value > 0 and value < 50:
+		return value
+	elif value >=50:
+		return '50+'
 
 
 @register.filter
 def format_selftext(text, count):
-	if count > len(text):
+	result = text.split(' ')
+	if count * 2 >= len(result):
 		return text
 
-	result = text.split(' ')
 	first = ' '.join(result[0 : count])
 	last = ' '.join(result[len(result) - count : len(result)])
 	result = f'{first} ... {last}'
