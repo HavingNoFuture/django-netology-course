@@ -18,15 +18,17 @@
       <div class="row">
         <h1 class="col s14">Инфляция в России</h1>
         <ul class="col s14 m8">
-          <ul class="headers">
-          {% for header in headers %}
-            <li style='display: inline-block; width: 75px;'>{{ header }}</li>
-          {% endfor %}
-          </ul>
           {% for row in data %}
+            {% if forloop.first %}
+              <ul class="headers">
+                {% for month in row.keys %}
+                  <li style='display: inline-block; width: 75px;'>{{ month }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
             <li>
               <ul class="year">
-                {% for col in row %}
+                {% for col in row.values %}
                   {% if forloop.first %}
                     <li style='display: inline-block; width: 75px; background-color: white'>{{ col }}</li>
                   {% elif forloop.last %}

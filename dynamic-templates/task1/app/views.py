@@ -13,14 +13,9 @@ class InflationView(TemplateView):
     def get(self, request, *args, **kwargs):
         # чтение csv-файла и заполнение контекста
 
-        database = []
-        headers = []
+        data = None
         with open('inflation_russia.csv', newline='', encoding='utf-8') as csvfile:
-            reader = csv.reader(csvfile)
-            for row in reader:
-                if not headers:
-                    headers = ''.join(row).split(';')
-                else:
-                    database.append(''.join(row).split(';'))
+            reader = csv.DictReader(csvfile, delimiter=';')
+            data = list(reader)
 
-        return render(request, self.template_name, {'data': database, 'headers': headers})
+        return render(request, self.template_name, {'data': data})
